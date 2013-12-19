@@ -1,6 +1,8 @@
 import time
 import glob
+import math
 import random
+from collections import defaultdict
 
 
 class Predictor:
@@ -20,16 +22,69 @@ class Predictor:
         # implement your own training methond here
         spamCount = len(glob.glob(self.__spamFolder+'/*'))
         hamCount = len(glob.glob(self.__hamFolder+'/*'))
-        self.__spamFrequency = 1.0*spamCount/(spamCount+hamCount)
+
+        # Set up the vocabulary for all files in the training set
+        vocab = defaultdict(int)
+        spam = self.files2countdict(glob.glob(self.__spamFolder+"/*"))
+        vocab.update(spam[1])
+        ham = self.files2countdict(glob.glob(self.__hamFolder+"/*"))
+        vocab.update(ham[1])
+
+        # Set all counts to 0
+        vocab = defaultdict(int, zip(vocab.iterkeys(), [0 for i in vocab.values()]))
+
+        classes = []
+        dirs = [spam, ham]
+        for dir in dirs:
+            # Initialize to zero counts
+            countdict = defaultdict(int, vocab)
+            # Add in counts from this class
+            countdict.update(dir[1])
+            numwords = dir[0]
+
+            #***
+            # Here turn the "countdict" dictionary of word counts into
+            # into a dictionary of smoothed word probabilities
+            #***
+            probdict = defaultdict(float, vocab)
+            length = len(countdict)
+            for x in countdict:
+                probdict[x] = float(float(countdict[x] + 1) / float(numwords + length))
+
+            classes.append(probdict)
+        self.__dict = classes
+
+    def files2countdict(self, files):
+        """Given an array of filenames, return a dictionary with keys
+        being the space-separated, lower-cased words, and the values being
+        the number of times that word occurred in the files."""
+        numwords = 0
+        d = defaultdict(int)
+        for file in files:
+            for word in open(file).read().split():
+                numwords = numwords + 1
+                d[word.lower()] += 1
+        return (numwords, d)
 
     def predict(self, filename):
         '''Take in a filename, return whether this file is spam
         return value:
         True - filename is spam
-        False - filename is not spam (is ham)
-        '''
-        # do prediction on filename
-        if random.random() <= self.__spamFrequency:
+        False - filename is not spam (is ham)'''
+        spam = self.__dict[0]
+        s_score = 0
+        ham = self.__dict[1]
+        h_score = 0
+        #***
+        # Here, compute the naive bayes score for a file for a given class by:
+        # 1. Reading in each word, and converting it to lower case (see code below)
+        # 2. Adding  the log probability of that word for that class
+        #***
+        for x in open(filename).read().split():
+            x = x.lower()
+            s_score = s_score + math.log(spam.get(x,1))
+            h_score = h_score + math.log(ham.get(x,1))
+        if s_score > h_score:
             return True
         else:
             return False
