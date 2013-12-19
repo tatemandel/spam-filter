@@ -12,7 +12,8 @@ Experiments:
    were incorrectly classified increased. We decided not to include this into
    our final classifier.
 
-1. Case analysis
+2. Case analysis
  - We calculated the frequency of words that were all caps in the training
    set and incorporated that into our prediction for an input file. This new
-   feature was added to the score in the predict phase for a file.
+   feature was added to the score in the predict phase for a file. This didn't
+   prove to change anything in our solution, so we did not remove it.

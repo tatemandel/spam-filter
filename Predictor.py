@@ -25,16 +25,16 @@ class Predictor:
 
         # Set up the vocabulary for all files in the training set
         vocab = defaultdict(int)
-        spam = self.files2countdict(glob.glob(self.__spamFolder+"/*"))
-        vocab.update(spam[1])
-        ham = self.files2countdict(glob.glob(self.__hamFolder+"/*"))
-        vocab.update(ham[1])
+        self.spam = self.files2countdict(glob.glob(self.__spamFolder+"/*"))
+        vocab.update(self.spam[1])
+        self.ham = self.files2countdict(glob.glob(self.__hamFolder+"/*"))
+        vocab.update(self.ham[1])
 
         # Set all counts to 0
         vocab = defaultdict(int, zip(vocab.iterkeys(), [0 for i in vocab.values()]))
 
         classes = []
-        dirs = [spam, ham]
+        dirs = [self.spam, self.ham]
         for dir in dirs:
             # Initialize to zero counts
             countdict = defaultdict(int, vocab)
@@ -60,11 +60,19 @@ class Predictor:
         the number of times that word occurred in the files."""
         numwords = 0
         d = defaultdict(int)
+        numupper = 0
+        numchar = 0
         for file in files:
             for word in open(file).read().split():
+                for x in word:
+                    numchar = numchar + 1
+                    if x.isupper():
+                        numupper = numupper + 1
+                if not word.isupper():
+                    word = word.lower()
                 numwords = numwords + 1
-                d[word.lower()] += 1
-        return (numwords, d)
+                d[word] += 1
+        return (numwords, d, numupper, numchar)
 
     def predict(self, filename):
         '''Take in a filename, return whether this file is spam
@@ -80,10 +88,24 @@ class Predictor:
         # 1. Reading in each word, and converting it to lower case (see code below)
         # 2. Adding  the log probability of that word for that class
         #***
+        spam_upper = float(float(self.spam[2])/float(self.spam[3]))
+        ham_upper = float(float(self.ham[2])/float(self.ham[3]))
+        numupper = 0
+        numchars = 0
         for x in open(filename).read().split():
-            x = x.lower()
+            for y in x:
+                numchars = numchars + 1
+                if y.isupper():
+                    numupper = numupper + 1
+            if not x.isupper():
+                x = x.lower()
             s_score = s_score + math.log(spam.get(x,1))
             h_score = h_score + math.log(ham.get(x,1))
+        charfreq = float(float(numupper)/float(numchars))
+        if abs(charfreq - spam_upper) < abs(charfreq - ham_upper):
+            s_score = s_score + math.log(charfreq)
+        else:
+            h_score = h_score + math.log(charfreq)
         if s_score > h_score:
             return True
         else:
