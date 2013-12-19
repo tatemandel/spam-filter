@@ -1,0 +1,18 @@
+CIS 391 - Homework 6
+Tayler Mandel (tmandel)
+Tiernan Garsys (tgarsys)
+
+Experiments:
+
+1. Change case
+ - We first decided to remove the restriction that all words should be assumed
+   to have the same case. We checked if a word is mostly upper or lower case
+   and then just converted it to a word will all capital or all lower case
+   letters. This proved to hurt our prediction. The number of spam emails that
+   were incorrectly classified increased. We decided not to include this into
+   our final classifier.
+
+1. Case analysis
+ - We calculated the frequency of words that were all caps in the training
+   set and incorporated that into our prediction for an input file. This new
+   feature was added to the score in the predict phase for a file.
