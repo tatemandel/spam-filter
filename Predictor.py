@@ -105,6 +105,10 @@ class Predictor:
             x = x.lower()
             s_score = s_score + math.log(spam.get(x,1))
             h_score = h_score + math.log(ham.get(x,1))
+
+        print "\ne: " + filename
+        print "Spam score: " + str(s_score)
+        print " Ham score: " + str(h_score)
         
         if s_score > h_score:
             return True

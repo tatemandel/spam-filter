@@ -1,0 +1,2044 @@
+CIS 391 - Homework 6
+Tayler Mandel (tmandel)
+Tiernan Garsys (tgarsys)
+
+Experiments:
+
+1. Change case
+   We first decided to remove the restriction that all words should be assumed
+   to have the same case. We checked if a word is mostly upper or lower case
+   and then just converted it to a word with all capital or all lower case
+   letters. This proved to hurt our prediction. The number of spam emails that
+   were incorrectly classified increased. We went from 193/200 correct to 
+   192/200 correct spam classifications.
+
+2. Case analysis
+   We calculated the frequency of words that were all caps in the training
+   set and incorporated that into our prediction for an input file. This new
+   feature was added to the score in the predict phase for a file. This
+   addition increased the number of correct classifications of spam emails
+   from 193/200 to 199/200 for our dev set from the test set.
+ 
+   After finishing this feature, we found that adding back in the case change
+   from the previous experiment caused no difference any longer. This points
+   to the fact that this second feature has greater significance than the 
+   case of a few words in the email.
+
+3. Adjusted score based on case
+   We calculated the percentage of words that were all upper case in the spam
+   and ham folders and then applied this to the scores given during prediction.
+   If a capital word was found, we'd add the probability to the score. This did
+   not end up changing the accuracy in any way.
+
+4. Removed email headers
+   After performing the above changes, we attempted stripping the HTTP headers from
+   the emails before parsing the file for either training or predicting. When this was
+   done, accuracy on the dev set decreased slightly; the classification of spam emails 
+   properly remained at 199/200, while the classification of ham emails went from
+   200/200 to 199/200.
+
+Results:
+    When run on the dev set, our classifier classified 204 of the emails as SPAM, and
+    196 of the emails as HAM. The full results for 
+
+e: hw6-spamham-data/dev/dev1
+Spam score: -2532.56653231
+ Ham score: -2343.80357764
+hw6-spamham-data/dev/dev1 is False
+
+e: hw6-spamham-data/dev/dev10
+Spam score: -3069.91246625
+ Ham score: -2866.75114294
+hw6-spamham-data/dev/dev10 is False
+
+e: hw6-spamham-data/dev/dev100
+Spam score: -4972.96775789
+ Ham score: -4883.60958821
+hw6-spamham-data/dev/dev100 is False
+
+e: hw6-spamham-data/dev/dev101
+Spam score: -3669.30602568
+ Ham score: -3386.68997672
+hw6-spamham-data/dev/dev101 is False
+
+e: hw6-spamham-data/dev/dev102
+Spam score: -2514.28092938
+ Ham score: -2319.24665065
+hw6-spamham-data/dev/dev102 is False
+
+e: hw6-spamham-data/dev/dev103
+Spam score: -4599.78673051
+ Ham score: -4421.52259185
+hw6-spamham-data/dev/dev103 is False
+
+e: hw6-spamham-data/dev/dev104
+Spam score: -2674.9126593
+ Ham score: -2524.25202828
+hw6-spamham-data/dev/dev104 is False
+
+e: hw6-spamham-data/dev/dev105
+Spam score: -2558.22727176
+ Ham score: -2363.65988634
+hw6-spamham-data/dev/dev105 is False
+
+e: hw6-spamham-data/dev/dev106
+Spam score: -3490.16054342
+ Ham score: -3277.92222066
+hw6-spamham-data/dev/dev106 is False
+
+e: hw6-spamham-data/dev/dev107
+Spam score: -6327.17678055
+ Ham score: -6199.05481325
+hw6-spamham-data/dev/dev107 is False
+
+e: hw6-spamham-data/dev/dev108
+Spam score: -11866.1596163
+ Ham score: -11814.2330655
+hw6-spamham-data/dev/dev108 is False
+
+e: hw6-spamham-data/dev/dev109
+Spam score: -13291.3483809
+ Ham score: -11681.3062574
+hw6-spamham-data/dev/dev109 is False
+
+e: hw6-spamham-data/dev/dev11
+Spam score: -3959.94055047
+ Ham score: -3788.15933702
+hw6-spamham-data/dev/dev11 is False
+
+e: hw6-spamham-data/dev/dev110
+Spam score: -4138.60920994
+ Ham score: -4033.25475802
+hw6-spamham-data/dev/dev110 is False
+
+e: hw6-spamham-data/dev/dev111
+Spam score: -2614.02541134
+ Ham score: -2514.66289921
+hw6-spamham-data/dev/dev111 is False
+
+e: hw6-spamham-data/dev/dev112
+Spam score: -2601.47013618
+ Ham score: -2419.39769585
+hw6-spamham-data/dev/dev112 is False
+
+e: hw6-spamham-data/dev/dev113
+Spam score: -5590.10238355
+ Ham score: -5334.37628102
+hw6-spamham-data/dev/dev113 is False
+
+e: hw6-spamham-data/dev/dev114
+Spam score: -4361.38437634
+ Ham score: -4101.94368909
+hw6-spamham-data/dev/dev114 is False
+
+e: hw6-spamham-data/dev/dev115
+Spam score: -3118.80760921
+ Ham score: -2997.24329627
+hw6-spamham-data/dev/dev115 is False
+
+e: hw6-spamham-data/dev/dev116
+Spam score: -3210.2129237
+ Ham score: -3036.66943853
+hw6-spamham-data/dev/dev116 is False
+
+e: hw6-spamham-data/dev/dev117
+Spam score: -3513.14435281
+ Ham score: -3358.76658476
+hw6-spamham-data/dev/dev117 is False
+
+e: hw6-spamham-data/dev/dev118
+Spam score: -3511.9350191
+ Ham score: -3738.491444
+hw6-spamham-data/dev/dev118 is True
+
+e: hw6-spamham-data/dev/dev119
+Spam score: -2016.17580483
+ Ham score: -1884.83548493
+hw6-spamham-data/dev/dev119 is False
+
+e: hw6-spamham-data/dev/dev12
+Spam score: -4702.71730152
+ Ham score: -4499.49579735
+hw6-spamham-data/dev/dev12 is False
+
+e: hw6-spamham-data/dev/dev120
+Spam score: -10275.0330109
+ Ham score: -10201.1856111
+hw6-spamham-data/dev/dev120 is False
+
+e: hw6-spamham-data/dev/dev121
+Spam score: -11799.3173249
+ Ham score: -11853.9427524
+hw6-spamham-data/dev/dev121 is True
+
+e: hw6-spamham-data/dev/dev122
+Spam score: -3432.28144216
+ Ham score: -3298.38146082
+hw6-spamham-data/dev/dev122 is False
+
+e: hw6-spamham-data/dev/dev123
+Spam score: -2556.5864475
+ Ham score: -2479.84380509
+hw6-spamham-data/dev/dev123 is False
+
+e: hw6-spamham-data/dev/dev124
+Spam score: -3673.148941
+ Ham score: -3494.19205547
+hw6-spamham-data/dev/dev124 is False
+
+e: hw6-spamham-data/dev/dev125
+Spam score: -2464.23387759
+ Ham score: -2351.84369491
+hw6-spamham-data/dev/dev125 is False
+
+e: hw6-spamham-data/dev/dev126
+Spam score: -2597.29515909
+ Ham score: -2477.83604279
+hw6-spamham-data/dev/dev126 is False
+
+e: hw6-spamham-data/dev/dev127
+Spam score: -2647.07174738
+ Ham score: -2538.39931701
+hw6-spamham-data/dev/dev127 is False
+
+e: hw6-spamham-data/dev/dev128
+Spam score: -3995.14150006
+ Ham score: -3785.87524004
+hw6-spamham-data/dev/dev128 is False
+
+e: hw6-spamham-data/dev/dev129
+Spam score: -2481.51883861
+ Ham score: -2393.55544746
+hw6-spamham-data/dev/dev129 is False
+
+e: hw6-spamham-data/dev/dev13
+Spam score: -3116.47922546
+ Ham score: -2923.83116372
+hw6-spamham-data/dev/dev13 is False
+
+e: hw6-spamham-data/dev/dev130
+Spam score: -3225.90730918
+ Ham score: -3133.69339423
+hw6-spamham-data/dev/dev130 is False
+
+e: hw6-spamham-data/dev/dev131
+Spam score: -2146.92457842
+ Ham score: -2107.6067021
+hw6-spamham-data/dev/dev131 is False
+
+e: hw6-spamham-data/dev/dev132
+Spam score: -2256.47317696
+ Ham score: -2181.0619141
+hw6-spamham-data/dev/dev132 is False
+
+e: hw6-spamham-data/dev/dev133
+Spam score: -2365.0850118
+ Ham score: -2263.84545947
+hw6-spamham-data/dev/dev133 is False
+
+e: hw6-spamham-data/dev/dev134
+Spam score: -2359.35538521
+ Ham score: -2255.70776658
+hw6-spamham-data/dev/dev134 is False
+
+e: hw6-spamham-data/dev/dev135
+Spam score: -2763.13338437
+ Ham score: -2636.62710513
+hw6-spamham-data/dev/dev135 is False
+
+e: hw6-spamham-data/dev/dev136
+Spam score: -2625.31266954
+ Ham score: -2557.55958281
+hw6-spamham-data/dev/dev136 is False
+
+e: hw6-spamham-data/dev/dev137
+Spam score: -2872.09060898
+ Ham score: -2722.48392849
+hw6-spamham-data/dev/dev137 is False
+
+e: hw6-spamham-data/dev/dev138
+Spam score: -2902.18829077
+ Ham score: -2818.5915879
+hw6-spamham-data/dev/dev138 is False
+
+e: hw6-spamham-data/dev/dev139
+Spam score: -3148.79080796
+ Ham score: -3063.520354
+hw6-spamham-data/dev/dev139 is False
+
+e: hw6-spamham-data/dev/dev14
+Spam score: -4310.62278959
+ Ham score: -4083.20706351
+hw6-spamham-data/dev/dev14 is False
+
+e: hw6-spamham-data/dev/dev140
+Spam score: -3384.02738739
+ Ham score: -3248.80204605
+hw6-spamham-data/dev/dev140 is False
+
+e: hw6-spamham-data/dev/dev141
+Spam score: -3600.0765275
+ Ham score: -3383.83332788
+hw6-spamham-data/dev/dev141 is False
+
+e: hw6-spamham-data/dev/dev142
+Spam score: -3602.57953134
+ Ham score: -3487.24463659
+hw6-spamham-data/dev/dev142 is False
+
+e: hw6-spamham-data/dev/dev143
+Spam score: -3330.07785155
+ Ham score: -3230.33451433
+hw6-spamham-data/dev/dev143 is False
+
+e: hw6-spamham-data/dev/dev144
+Spam score: -3720.8356584
+ Ham score: -3581.68390127
+hw6-spamham-data/dev/dev144 is False
+
+e: hw6-spamham-data/dev/dev145
+Spam score: -3809.28881135
+ Ham score: -3514.72945754
+hw6-spamham-data/dev/dev145 is False
+
+e: hw6-spamham-data/dev/dev146
+Spam score: -4151.99589835
+ Ham score: -3904.6590091
+hw6-spamham-data/dev/dev146 is False
+
+e: hw6-spamham-data/dev/dev147
+Spam score: -4216.01664201
+ Ham score: -3929.7370732
+hw6-spamham-data/dev/dev147 is False
+
+e: hw6-spamham-data/dev/dev148
+Spam score: -4518.36182482
+ Ham score: -4118.29945567
+hw6-spamham-data/dev/dev148 is False
+
+e: hw6-spamham-data/dev/dev149
+Spam score: -4896.32571646
+ Ham score: -4457.78368213
+hw6-spamham-data/dev/dev149 is False
+
+e: hw6-spamham-data/dev/dev15
+Spam score: -2512.9804501
+ Ham score: -2404.61543937
+hw6-spamham-data/dev/dev15 is False
+
+e: hw6-spamham-data/dev/dev150
+Spam score: -4399.79209251
+ Ham score: -4166.10134533
+hw6-spamham-data/dev/dev150 is False
+
+e: hw6-spamham-data/dev/dev151
+Spam score: -2090.3067888
+ Ham score: -2022.21024729
+hw6-spamham-data/dev/dev151 is False
+
+e: hw6-spamham-data/dev/dev152
+Spam score: -3555.83996184
+ Ham score: -3451.40264429
+hw6-spamham-data/dev/dev152 is False
+
+e: hw6-spamham-data/dev/dev153
+Spam score: -3266.77242735
+ Ham score: -3191.59486535
+hw6-spamham-data/dev/dev153 is False
+
+e: hw6-spamham-data/dev/dev154
+Spam score: -3781.67356692
+ Ham score: -3602.52879489
+hw6-spamham-data/dev/dev154 is False
+
+e: hw6-spamham-data/dev/dev155
+Spam score: -2058.61814163
+ Ham score: -1971.545392
+hw6-spamham-data/dev/dev155 is False
+
+e: hw6-spamham-data/dev/dev156
+Spam score: -2393.72210217
+ Ham score: -2309.91443593
+hw6-spamham-data/dev/dev156 is False
+
+e: hw6-spamham-data/dev/dev157
+Spam score: -2883.274919
+ Ham score: -2769.06362206
+hw6-spamham-data/dev/dev157 is False
+
+e: hw6-spamham-data/dev/dev158
+Spam score: -2850.08388788
+ Ham score: -2744.46793813
+hw6-spamham-data/dev/dev158 is False
+
+e: hw6-spamham-data/dev/dev159
+Spam score: -3377.53595274
+ Ham score: -3172.55075049
+hw6-spamham-data/dev/dev159 is False
+
+e: hw6-spamham-data/dev/dev16
+Spam score: -2518.51727774
+ Ham score: -2406.47773965
+hw6-spamham-data/dev/dev16 is False
+
+e: hw6-spamham-data/dev/dev160
+Spam score: -4395.33308629
+ Ham score: -4076.28406075
+hw6-spamham-data/dev/dev160 is False
+
+e: hw6-spamham-data/dev/dev161
+Spam score: -3416.35818639
+ Ham score: -3290.74410015
+hw6-spamham-data/dev/dev161 is False
+
+e: hw6-spamham-data/dev/dev162
+Spam score: -4243.87671181
+ Ham score: -4020.23169915
+hw6-spamham-data/dev/dev162 is False
+
+e: hw6-spamham-data/dev/dev163
+Spam score: -3816.72207244
+ Ham score: -3675.38739743
+hw6-spamham-data/dev/dev163 is False
+
+e: hw6-spamham-data/dev/dev164
+Spam score: -3235.99632121
+ Ham score: -3109.32533859
+hw6-spamham-data/dev/dev164 is False
+
+e: hw6-spamham-data/dev/dev165
+Spam score: -4028.17155024
+ Ham score: -3822.22336004
+hw6-spamham-data/dev/dev165 is False
+
+e: hw6-spamham-data/dev/dev166
+Spam score: -2289.78212053
+ Ham score: -2190.49614865
+hw6-spamham-data/dev/dev166 is False
+
+e: hw6-spamham-data/dev/dev167
+Spam score: -3156.960594
+ Ham score: -2989.78930559
+hw6-spamham-data/dev/dev167 is False
+
+e: hw6-spamham-data/dev/dev168
+Spam score: -3660.01066611
+ Ham score: -3471.89678285
+hw6-spamham-data/dev/dev168 is False
+
+e: hw6-spamham-data/dev/dev169
+Spam score: -4473.1263992
+ Ham score: -4257.88639401
+hw6-spamham-data/dev/dev169 is False
+
+e: hw6-spamham-data/dev/dev17
+Spam score: -2500.60733736
+ Ham score: -2388.25636107
+hw6-spamham-data/dev/dev17 is False
+
+e: hw6-spamham-data/dev/dev170
+Spam score: -3015.64271771
+ Ham score: -2919.77559297
+hw6-spamham-data/dev/dev170 is False
+
+e: hw6-spamham-data/dev/dev171
+Spam score: -2465.29449814
+ Ham score: -2375.30599316
+hw6-spamham-data/dev/dev171 is False
+
+e: hw6-spamham-data/dev/dev172
+Spam score: -2291.38069054
+ Ham score: -2199.8074353
+hw6-spamham-data/dev/dev172 is False
+
+e: hw6-spamham-data/dev/dev173
+Spam score: -2886.89714867
+ Ham score: -2742.19018291
+hw6-spamham-data/dev/dev173 is False
+
+e: hw6-spamham-data/dev/dev174
+Spam score: -3114.63459385
+ Ham score: -3054.14041331
+hw6-spamham-data/dev/dev174 is False
+
+e: hw6-spamham-data/dev/dev175
+Spam score: -2875.58652884
+ Ham score: -2803.12616682
+hw6-spamham-data/dev/dev175 is False
+
+e: hw6-spamham-data/dev/dev176
+Spam score: -2808.96960147
+ Ham score: -2654.61171987
+hw6-spamham-data/dev/dev176 is False
+
+e: hw6-spamham-data/dev/dev177
+Spam score: -13618.6357819
+ Ham score: -17379.6041914
+hw6-spamham-data/dev/dev177 is True
+
+e: hw6-spamham-data/dev/dev178
+Spam score: -3778.54496537
+ Ham score: -3699.63649779
+hw6-spamham-data/dev/dev178 is False
+
+e: hw6-spamham-data/dev/dev179
+Spam score: -3762.99708537
+ Ham score: -3673.39114257
+hw6-spamham-data/dev/dev179 is False
+
+e: hw6-spamham-data/dev/dev18
+Spam score: -21935.2912125
+ Ham score: -22722.9878559
+hw6-spamham-data/dev/dev18 is True
+
+e: hw6-spamham-data/dev/dev180
+Spam score: -2735.55976825
+ Ham score: -2647.25376153
+hw6-spamham-data/dev/dev180 is False
+
+e: hw6-spamham-data/dev/dev181
+Spam score: -2599.75560163
+ Ham score: -2490.88771463
+hw6-spamham-data/dev/dev181 is False
+
+e: hw6-spamham-data/dev/dev182
+Spam score: -2696.91520641
+ Ham score: -2575.04787079
+hw6-spamham-data/dev/dev182 is False
+
+e: hw6-spamham-data/dev/dev183
+Spam score: -5458.6603076
+ Ham score: -5542.27407112
+hw6-spamham-data/dev/dev183 is True
+
+e: hw6-spamham-data/dev/dev184
+Spam score: -2250.63489411
+ Ham score: -2170.56501527
+hw6-spamham-data/dev/dev184 is False
+
+e: hw6-spamham-data/dev/dev185
+Spam score: -2910.38477625
+ Ham score: -2814.59890379
+hw6-spamham-data/dev/dev185 is False
+
+e: hw6-spamham-data/dev/dev186
+Spam score: -3001.65821926
+ Ham score: -2911.7081114
+hw6-spamham-data/dev/dev186 is False
+
+e: hw6-spamham-data/dev/dev187
+Spam score: -4639.85113195
+ Ham score: -4576.2527099
+hw6-spamham-data/dev/dev187 is False
+
+e: hw6-spamham-data/dev/dev188
+Spam score: -2962.33872184
+ Ham score: -2815.34592466
+hw6-spamham-data/dev/dev188 is False
+
+e: hw6-spamham-data/dev/dev189
+Spam score: -3479.68610655
+ Ham score: -3283.88839079
+hw6-spamham-data/dev/dev189 is False
+
+e: hw6-spamham-data/dev/dev19
+Spam score: -3122.30453534
+ Ham score: -2875.41592375
+hw6-spamham-data/dev/dev19 is False
+
+e: hw6-spamham-data/dev/dev190
+Spam score: -3516.38387667
+ Ham score: -3378.63988629
+hw6-spamham-data/dev/dev190 is False
+
+e: hw6-spamham-data/dev/dev191
+Spam score: -4025.02310473
+ Ham score: -3836.61571437
+hw6-spamham-data/dev/dev191 is False
+
+e: hw6-spamham-data/dev/dev192
+Spam score: -3432.92741146
+ Ham score: -3263.93031392
+hw6-spamham-data/dev/dev192 is False
+
+e: hw6-spamham-data/dev/dev193
+Spam score: -3651.96270741
+ Ham score: -3429.98426045
+hw6-spamham-data/dev/dev193 is False
+
+e: hw6-spamham-data/dev/dev194
+Spam score: -3387.45015767
+ Ham score: -3232.71010082
+hw6-spamham-data/dev/dev194 is False
+
+e: hw6-spamham-data/dev/dev195
+Spam score: -3368.12106107
+ Ham score: -3214.45222438
+hw6-spamham-data/dev/dev195 is False
+
+e: hw6-spamham-data/dev/dev196
+Spam score: -2913.07612534
+ Ham score: -2802.36711521
+hw6-spamham-data/dev/dev196 is False
+
+e: hw6-spamham-data/dev/dev197
+Spam score: -4178.70934827
+ Ham score: -3981.07196692
+hw6-spamham-data/dev/dev197 is False
+
+e: hw6-spamham-data/dev/dev198
+Spam score: -3881.21566755
+ Ham score: -3706.06891173
+hw6-spamham-data/dev/dev198 is False
+
+e: hw6-spamham-data/dev/dev199
+Spam score: -2938.28081426
+ Ham score: -2818.63034103
+hw6-spamham-data/dev/dev199 is False
+
+e: hw6-spamham-data/dev/dev2
+Spam score: -2436.77630296
+ Ham score: -2349.34702605
+hw6-spamham-data/dev/dev2 is False
+
+e: hw6-spamham-data/dev/dev20
+Spam score: -4491.60746934
+ Ham score: -4269.90819561
+hw6-spamham-data/dev/dev20 is False
+
+e: hw6-spamham-data/dev/dev200
+Spam score: -5056.08280109
+ Ham score: -4738.12498201
+hw6-spamham-data/dev/dev200 is False
+
+e: hw6-spamham-data/dev/dev201
+Spam score: -16720.6329655
+ Ham score: -18453.4379607
+hw6-spamham-data/dev/dev201 is True
+
+e: hw6-spamham-data/dev/dev202
+Spam score: -5059.02119524
+ Ham score: -6442.04789506
+hw6-spamham-data/dev/dev202 is True
+
+e: hw6-spamham-data/dev/dev203
+Spam score: -10217.4868459
+ Ham score: -12508.954111
+hw6-spamham-data/dev/dev203 is True
+
+e: hw6-spamham-data/dev/dev204
+Spam score: -2316.85385615
+ Ham score: -2752.80157128
+hw6-spamham-data/dev/dev204 is True
+
+e: hw6-spamham-data/dev/dev205
+Spam score: -3290.77589016
+ Ham score: -3731.70540393
+hw6-spamham-data/dev/dev205 is True
+
+e: hw6-spamham-data/dev/dev206
+Spam score: -3614.85353547
+ Ham score: -3965.46711364
+hw6-spamham-data/dev/dev206 is True
+
+e: hw6-spamham-data/dev/dev207
+Spam score: -3832.22462564
+ Ham score: -4646.53656848
+hw6-spamham-data/dev/dev207 is True
+
+e: hw6-spamham-data/dev/dev208
+Spam score: -5956.65044062
+ Ham score: -6646.4432778
+hw6-spamham-data/dev/dev208 is True
+
+e: hw6-spamham-data/dev/dev209
+Spam score: -1930.37382738
+ Ham score: -2244.12946551
+hw6-spamham-data/dev/dev209 is True
+
+e: hw6-spamham-data/dev/dev21
+Spam score: -6560.93327495
+ Ham score: -6227.4007852
+hw6-spamham-data/dev/dev21 is False
+
+e: hw6-spamham-data/dev/dev210
+Spam score: -5021.98803741
+ Ham score: -5634.26300324
+hw6-spamham-data/dev/dev210 is True
+
+e: hw6-spamham-data/dev/dev211
+Spam score: -4844.76854065
+ Ham score: -5421.9657562
+hw6-spamham-data/dev/dev211 is True
+
+e: hw6-spamham-data/dev/dev212
+Spam score: -4216.04538188
+ Ham score: -5180.89795829
+hw6-spamham-data/dev/dev212 is True
+
+e: hw6-spamham-data/dev/dev213
+Spam score: -6344.91697977
+ Ham score: -8301.0667441
+hw6-spamham-data/dev/dev213 is True
+
+e: hw6-spamham-data/dev/dev214
+Spam score: -1748.26314794
+ Ham score: -1949.97448125
+hw6-spamham-data/dev/dev214 is True
+
+e: hw6-spamham-data/dev/dev215
+Spam score: -5815.40865316
+ Ham score: -7476.0016597
+hw6-spamham-data/dev/dev215 is True
+
+e: hw6-spamham-data/dev/dev216
+Spam score: -18883.5507566
+ Ham score: -22935.1495313
+hw6-spamham-data/dev/dev216 is True
+
+e: hw6-spamham-data/dev/dev217
+Spam score: -13136.8997814
+ Ham score: -17662.0285132
+hw6-spamham-data/dev/dev217 is True
+
+e: hw6-spamham-data/dev/dev218
+Spam score: -1876.53795839
+ Ham score: -2143.84886511
+hw6-spamham-data/dev/dev218 is True
+
+e: hw6-spamham-data/dev/dev219
+Spam score: -8035.51042041
+ Ham score: -10632.5646656
+hw6-spamham-data/dev/dev219 is True
+
+e: hw6-spamham-data/dev/dev22
+Spam score: -14738.8090086
+ Ham score: -14755.2934674
+hw6-spamham-data/dev/dev22 is True
+
+e: hw6-spamham-data/dev/dev220
+Spam score: -3289.48421516
+ Ham score: -4004.55920549
+hw6-spamham-data/dev/dev220 is True
+
+e: hw6-spamham-data/dev/dev221
+Spam score: -11770.218134
+ Ham score: -13908.6180789
+hw6-spamham-data/dev/dev221 is True
+
+e: hw6-spamham-data/dev/dev222
+Spam score: -2061.58487245
+ Ham score: -2114.18762498
+hw6-spamham-data/dev/dev222 is True
+
+e: hw6-spamham-data/dev/dev223
+Spam score: -6752.1913123
+ Ham score: -7605.85452259
+hw6-spamham-data/dev/dev223 is True
+
+e: hw6-spamham-data/dev/dev224
+Spam score: -1883.70557958
+ Ham score: -2310.83146439
+hw6-spamham-data/dev/dev224 is True
+
+e: hw6-spamham-data/dev/dev225
+Spam score: -6020.83005068
+ Ham score: -6730.89165882
+hw6-spamham-data/dev/dev225 is True
+
+e: hw6-spamham-data/dev/dev226
+Spam score: -3734.2957579
+ Ham score: -4606.61766047
+hw6-spamham-data/dev/dev226 is True
+
+e: hw6-spamham-data/dev/dev227
+Spam score: -3525.83285855
+ Ham score: -4337.95547088
+hw6-spamham-data/dev/dev227 is True
+
+e: hw6-spamham-data/dev/dev228
+Spam score: -9306.97658777
+ Ham score: -11382.8174357
+hw6-spamham-data/dev/dev228 is True
+
+e: hw6-spamham-data/dev/dev229
+Spam score: -7489.433928
+ Ham score: -9902.69122436
+hw6-spamham-data/dev/dev229 is True
+
+e: hw6-spamham-data/dev/dev23
+Spam score: -4411.80860916
+ Ham score: -4242.89492949
+hw6-spamham-data/dev/dev23 is False
+
+e: hw6-spamham-data/dev/dev230
+Spam score: -2329.16338745
+ Ham score: -2876.47959096
+hw6-spamham-data/dev/dev230 is True
+
+e: hw6-spamham-data/dev/dev231
+Spam score: -2752.91846683
+ Ham score: -3276.49901465
+hw6-spamham-data/dev/dev231 is True
+
+e: hw6-spamham-data/dev/dev232
+Spam score: -9659.9953877
+ Ham score: -11629.4955919
+hw6-spamham-data/dev/dev232 is True
+
+e: hw6-spamham-data/dev/dev233
+Spam score: -3229.718704
+ Ham score: -3836.90353075
+hw6-spamham-data/dev/dev233 is True
+
+e: hw6-spamham-data/dev/dev234
+Spam score: -2947.76263067
+ Ham score: -3310.81750145
+hw6-spamham-data/dev/dev234 is True
+
+e: hw6-spamham-data/dev/dev235
+Spam score: -7505.7525012
+ Ham score: -8796.74068539
+hw6-spamham-data/dev/dev235 is True
+
+e: hw6-spamham-data/dev/dev236
+Spam score: -2348.44052746
+ Ham score: -2339.34130883
+hw6-spamham-data/dev/dev236 is False
+
+e: hw6-spamham-data/dev/dev237
+Spam score: -4605.32717879
+ Ham score: -6077.70250492
+hw6-spamham-data/dev/dev237 is True
+
+e: hw6-spamham-data/dev/dev238
+Spam score: -4730.24918634
+ Ham score: -5595.91403635
+hw6-spamham-data/dev/dev238 is True
+
+e: hw6-spamham-data/dev/dev239
+Spam score: -9867.95373953
+ Ham score: -11160.4213527
+hw6-spamham-data/dev/dev239 is True
+
+e: hw6-spamham-data/dev/dev24
+Spam score: -2243.9208519
+ Ham score: -2124.888691
+hw6-spamham-data/dev/dev24 is False
+
+e: hw6-spamham-data/dev/dev240
+Spam score: -3817.02890167
+ Ham score: -4178.98142366
+hw6-spamham-data/dev/dev240 is True
+
+e: hw6-spamham-data/dev/dev241
+Spam score: -7660.68193299
+ Ham score: -8199.92272945
+hw6-spamham-data/dev/dev241 is True
+
+e: hw6-spamham-data/dev/dev242
+Spam score: -7428.64815864
+ Ham score: -9306.95538582
+hw6-spamham-data/dev/dev242 is True
+
+e: hw6-spamham-data/dev/dev243
+Spam score: -3981.68829897
+ Ham score: -4277.01121144
+hw6-spamham-data/dev/dev243 is True
+
+e: hw6-spamham-data/dev/dev244
+Spam score: -2067.82506399
+ Ham score: -2408.63830486
+hw6-spamham-data/dev/dev244 is True
+
+e: hw6-spamham-data/dev/dev245
+Spam score: -2116.28009915
+ Ham score: -2431.17238072
+hw6-spamham-data/dev/dev245 is True
+
+e: hw6-spamham-data/dev/dev246
+Spam score: -8967.92351427
+ Ham score: -10686.5016504
+hw6-spamham-data/dev/dev246 is True
+
+e: hw6-spamham-data/dev/dev247
+Spam score: -2217.87381253
+ Ham score: -2499.30385907
+hw6-spamham-data/dev/dev247 is True
+
+e: hw6-spamham-data/dev/dev248
+Spam score: -9761.68616611
+ Ham score: -11727.6221155
+hw6-spamham-data/dev/dev248 is True
+
+e: hw6-spamham-data/dev/dev249
+Spam score: -1633.10435439
+ Ham score: -1720.41192534
+hw6-spamham-data/dev/dev249 is True
+
+e: hw6-spamham-data/dev/dev25
+Spam score: -3199.85748564
+ Ham score: -2975.12973596
+hw6-spamham-data/dev/dev25 is False
+
+e: hw6-spamham-data/dev/dev250
+Spam score: -10292.6929844
+ Ham score: -12539.7476033
+hw6-spamham-data/dev/dev250 is True
+
+e: hw6-spamham-data/dev/dev251
+Spam score: -1916.91329401
+ Ham score: -2070.48938371
+hw6-spamham-data/dev/dev251 is True
+
+e: hw6-spamham-data/dev/dev252
+Spam score: -5082.2926666
+ Ham score: -5912.16423926
+hw6-spamham-data/dev/dev252 is True
+
+e: hw6-spamham-data/dev/dev253
+Spam score: -2019.51535136
+ Ham score: -2480.26681645
+hw6-spamham-data/dev/dev253 is True
+
+e: hw6-spamham-data/dev/dev254
+Spam score: -18265.7360525
+ Ham score: -22182.4676046
+hw6-spamham-data/dev/dev254 is True
+
+e: hw6-spamham-data/dev/dev255
+Spam score: -3574.74761937
+ Ham score: -4144.42395793
+hw6-spamham-data/dev/dev255 is True
+
+e: hw6-spamham-data/dev/dev256
+Spam score: -6008.47262045
+ Ham score: -6698.07335251
+hw6-spamham-data/dev/dev256 is True
+
+e: hw6-spamham-data/dev/dev257
+Spam score: -4256.2831024
+ Ham score: -4816.76714968
+hw6-spamham-data/dev/dev257 is True
+
+e: hw6-spamham-data/dev/dev258
+Spam score: -4121.24553012
+ Ham score: -4696.74713199
+hw6-spamham-data/dev/dev258 is True
+
+e: hw6-spamham-data/dev/dev259
+Spam score: -31678.7800895
+ Ham score: -36094.5950616
+hw6-spamham-data/dev/dev259 is True
+
+e: hw6-spamham-data/dev/dev26
+Spam score: -2657.60255017
+ Ham score: -2515.53025784
+hw6-spamham-data/dev/dev26 is False
+
+e: hw6-spamham-data/dev/dev260
+Spam score: -5355.16196866
+ Ham score: -5719.60456925
+hw6-spamham-data/dev/dev260 is True
+
+e: hw6-spamham-data/dev/dev261
+Spam score: -2329.77941478
+ Ham score: -2663.99480493
+hw6-spamham-data/dev/dev261 is True
+
+e: hw6-spamham-data/dev/dev262
+Spam score: -3420.70673314
+ Ham score: -3994.01420122
+hw6-spamham-data/dev/dev262 is True
+
+e: hw6-spamham-data/dev/dev263
+Spam score: -2116.18523998
+ Ham score: -2135.71524061
+hw6-spamham-data/dev/dev263 is True
+
+e: hw6-spamham-data/dev/dev264
+Spam score: -9515.14471394
+ Ham score: -12208.0900634
+hw6-spamham-data/dev/dev264 is True
+
+e: hw6-spamham-data/dev/dev265
+Spam score: -1674.31197213
+ Ham score: -1628.31218685
+hw6-spamham-data/dev/dev265 is False
+
+e: hw6-spamham-data/dev/dev266
+Spam score: -3770.93894254
+ Ham score: -4892.72046591
+hw6-spamham-data/dev/dev266 is True
+
+e: hw6-spamham-data/dev/dev267
+Spam score: -3413.94857172
+ Ham score: -3810.04468271
+hw6-spamham-data/dev/dev267 is True
+
+e: hw6-spamham-data/dev/dev268
+Spam score: -5910.87152552
+ Ham score: -7481.99673031
+hw6-spamham-data/dev/dev268 is True
+
+e: hw6-spamham-data/dev/dev269
+Spam score: -3526.14536747
+ Ham score: -3919.59028322
+hw6-spamham-data/dev/dev269 is True
+
+e: hw6-spamham-data/dev/dev27
+Spam score: -3313.88765315
+ Ham score: -3172.76313575
+hw6-spamham-data/dev/dev27 is False
+
+e: hw6-spamham-data/dev/dev270
+Spam score: -11785.6858158
+ Ham score: -13573.6760694
+hw6-spamham-data/dev/dev270 is True
+
+e: hw6-spamham-data/dev/dev271
+Spam score: -6405.45906239
+ Ham score: -7951.73711992
+hw6-spamham-data/dev/dev271 is True
+
+e: hw6-spamham-data/dev/dev272
+Spam score: -3398.77834144
+ Ham score: -4267.33751082
+hw6-spamham-data/dev/dev272 is True
+
+e: hw6-spamham-data/dev/dev273
+Spam score: -5150.17960061
+ Ham score: -5507.70042125
+hw6-spamham-data/dev/dev273 is True
+
+e: hw6-spamham-data/dev/dev274
+Spam score: -3107.08174873
+ Ham score: -3778.46925757
+hw6-spamham-data/dev/dev274 is True
+
+e: hw6-spamham-data/dev/dev275
+Spam score: -4239.7912867
+ Ham score: -4872.1150514
+hw6-spamham-data/dev/dev275 is True
+
+e: hw6-spamham-data/dev/dev276
+Spam score: -2031.27197152
+ Ham score: -2250.38638477
+hw6-spamham-data/dev/dev276 is True
+
+e: hw6-spamham-data/dev/dev277
+Spam score: -4099.68697113
+ Ham score: -4699.23818977
+hw6-spamham-data/dev/dev277 is True
+
+e: hw6-spamham-data/dev/dev278
+Spam score: -7709.14017759
+ Ham score: -9809.70001373
+hw6-spamham-data/dev/dev278 is True
+
+e: hw6-spamham-data/dev/dev279
+Spam score: -3844.39591148
+ Ham score: -4620.63183288
+hw6-spamham-data/dev/dev279 is True
+
+e: hw6-spamham-data/dev/dev28
+Spam score: -6351.11153104
+ Ham score: -6260.29817134
+hw6-spamham-data/dev/dev28 is False
+
+e: hw6-spamham-data/dev/dev280
+Spam score: -2182.78198974
+ Ham score: -2420.51238839
+hw6-spamham-data/dev/dev280 is True
+
+e: hw6-spamham-data/dev/dev281
+Spam score: -2736.68915666
+ Ham score: -3388.49432707
+hw6-spamham-data/dev/dev281 is True
+
+e: hw6-spamham-data/dev/dev282
+Spam score: -2369.3671723
+ Ham score: -2612.61783173
+hw6-spamham-data/dev/dev282 is True
+
+e: hw6-spamham-data/dev/dev283
+Spam score: -87483.1650112
+ Ham score: -91202.2144106
+hw6-spamham-data/dev/dev283 is True
+
+e: hw6-spamham-data/dev/dev284
+Spam score: -6781.48450659
+ Ham score: -9092.68188917
+hw6-spamham-data/dev/dev284 is True
+
+e: hw6-spamham-data/dev/dev285
+Spam score: -3007.95275123
+ Ham score: -3513.87424648
+hw6-spamham-data/dev/dev285 is True
+
+e: hw6-spamham-data/dev/dev286
+Spam score: -6107.97441115
+ Ham score: -7240.49857589
+hw6-spamham-data/dev/dev286 is True
+
+e: hw6-spamham-data/dev/dev287
+Spam score: -31449.5363576
+ Ham score: -35865.9613758
+hw6-spamham-data/dev/dev287 is True
+
+e: hw6-spamham-data/dev/dev288
+Spam score: -6442.48813331
+ Ham score: -8161.05176733
+hw6-spamham-data/dev/dev288 is True
+
+e: hw6-spamham-data/dev/dev289
+Spam score: -2836.03160725
+ Ham score: -3341.11604845
+hw6-spamham-data/dev/dev289 is True
+
+e: hw6-spamham-data/dev/dev29
+Spam score: -8125.55344611
+ Ham score: -8089.08603895
+hw6-spamham-data/dev/dev29 is False
+
+e: hw6-spamham-data/dev/dev290
+Spam score: -5783.59503921
+ Ham score: -7278.10415018
+hw6-spamham-data/dev/dev290 is True
+
+e: hw6-spamham-data/dev/dev291
+Spam score: -6489.03042427
+ Ham score: -8119.00523046
+hw6-spamham-data/dev/dev291 is True
+
+e: hw6-spamham-data/dev/dev292
+Spam score: -1367.03175256
+ Ham score: -1683.66205544
+hw6-spamham-data/dev/dev292 is True
+
+e: hw6-spamham-data/dev/dev293
+Spam score: -7047.3807241
+ Ham score: -8765.51240643
+hw6-spamham-data/dev/dev293 is True
+
+e: hw6-spamham-data/dev/dev294
+Spam score: -42920.1872511
+ Ham score: -52816.6262601
+hw6-spamham-data/dev/dev294 is True
+
+e: hw6-spamham-data/dev/dev295
+Spam score: -42932.4763574
+ Ham score: -52833.450242
+hw6-spamham-data/dev/dev295 is True
+
+e: hw6-spamham-data/dev/dev296
+Spam score: -15317.563147
+ Ham score: -20276.6500774
+hw6-spamham-data/dev/dev296 is True
+
+e: hw6-spamham-data/dev/dev297
+Spam score: -40009.5369544
+ Ham score: -53313.6228781
+hw6-spamham-data/dev/dev297 is True
+
+e: hw6-spamham-data/dev/dev298
+Spam score: -4203.17441163
+ Ham score: -4754.97380714
+hw6-spamham-data/dev/dev298 is True
+
+e: hw6-spamham-data/dev/dev299
+Spam score: -2626.69985006
+ Ham score: -3079.27230336
+hw6-spamham-data/dev/dev299 is True
+
+e: hw6-spamham-data/dev/dev3
+Spam score: -3422.34166931
+ Ham score: -3231.08001577
+hw6-spamham-data/dev/dev3 is False
+
+e: hw6-spamham-data/dev/dev30
+Spam score: -2365.10071687
+ Ham score: -2236.06813098
+hw6-spamham-data/dev/dev30 is False
+
+e: hw6-spamham-data/dev/dev300
+Spam score: -2073.9527482
+ Ham score: -2339.29831087
+hw6-spamham-data/dev/dev300 is True
+
+e: hw6-spamham-data/dev/dev301
+Spam score: -5949.53542818
+ Ham score: -7391.55714446
+hw6-spamham-data/dev/dev301 is True
+
+e: hw6-spamham-data/dev/dev302
+Spam score: -3204.62675053
+ Ham score: -3685.19663417
+hw6-spamham-data/dev/dev302 is True
+
+e: hw6-spamham-data/dev/dev303
+Spam score: -3163.8513841
+ Ham score: -3286.26523085
+hw6-spamham-data/dev/dev303 is True
+
+e: hw6-spamham-data/dev/dev304
+Spam score: -3149.43691643
+ Ham score: -3342.67575423
+hw6-spamham-data/dev/dev304 is True
+
+e: hw6-spamham-data/dev/dev305
+Spam score: -2834.15865189
+ Ham score: -2994.71432803
+hw6-spamham-data/dev/dev305 is True
+
+e: hw6-spamham-data/dev/dev306
+Spam score: -3568.84519423
+ Ham score: -3599.14005527
+hw6-spamham-data/dev/dev306 is True
+
+e: hw6-spamham-data/dev/dev307
+Spam score: -3803.34078948
+ Ham score: -3819.35278989
+hw6-spamham-data/dev/dev307 is True
+
+e: hw6-spamham-data/dev/dev308
+Spam score: -4753.24394183
+ Ham score: -5420.31073684
+hw6-spamham-data/dev/dev308 is True
+
+e: hw6-spamham-data/dev/dev309
+Spam score: -2319.2294068
+ Ham score: -2820.61736502
+hw6-spamham-data/dev/dev309 is True
+
+e: hw6-spamham-data/dev/dev31
+Spam score: -2107.31902558
+ Ham score: -1928.29016491
+hw6-spamham-data/dev/dev31 is False
+
+e: hw6-spamham-data/dev/dev310
+Spam score: -4268.30836861
+ Ham score: -5218.00679803
+hw6-spamham-data/dev/dev310 is True
+
+e: hw6-spamham-data/dev/dev311
+Spam score: -3100.10887124
+ Ham score: -3404.47837121
+hw6-spamham-data/dev/dev311 is True
+
+e: hw6-spamham-data/dev/dev312
+Spam score: -2675.06151676
+ Ham score: -3100.75314756
+hw6-spamham-data/dev/dev312 is True
+
+e: hw6-spamham-data/dev/dev313
+Spam score: -2917.17824315
+ Ham score: -3378.44206141
+hw6-spamham-data/dev/dev313 is True
+
+e: hw6-spamham-data/dev/dev314
+Spam score: -2568.06741564
+ Ham score: -2568.95429152
+hw6-spamham-data/dev/dev314 is True
+
+e: hw6-spamham-data/dev/dev315
+Spam score: -2981.00741034
+ Ham score: -3183.34197392
+hw6-spamham-data/dev/dev315 is True
+
+e: hw6-spamham-data/dev/dev316
+Spam score: -3584.82539708
+ Ham score: -4480.86272208
+hw6-spamham-data/dev/dev316 is True
+
+e: hw6-spamham-data/dev/dev317
+Spam score: -1884.75948543
+ Ham score: -2064.51228263
+hw6-spamham-data/dev/dev317 is True
+
+e: hw6-spamham-data/dev/dev318
+Spam score: -6605.87761502
+ Ham score: -8996.04587549
+hw6-spamham-data/dev/dev318 is True
+
+e: hw6-spamham-data/dev/dev319
+Spam score: -3434.41618919
+ Ham score: -3825.57884298
+hw6-spamham-data/dev/dev319 is True
+
+e: hw6-spamham-data/dev/dev32
+Spam score: -2530.51857136
+ Ham score: -2312.1815194
+hw6-spamham-data/dev/dev32 is False
+
+e: hw6-spamham-data/dev/dev320
+Spam score: -2139.85154396
+ Ham score: -2134.0765195
+hw6-spamham-data/dev/dev320 is False
+
+e: hw6-spamham-data/dev/dev321
+Spam score: -2828.00478456
+ Ham score: -3107.30872988
+hw6-spamham-data/dev/dev321 is True
+
+e: hw6-spamham-data/dev/dev322
+Spam score: -1807.16123915
+ Ham score: -1956.15603286
+hw6-spamham-data/dev/dev322 is True
+
+e: hw6-spamham-data/dev/dev323
+Spam score: -3266.64594854
+ Ham score: -3951.86241959
+hw6-spamham-data/dev/dev323 is True
+
+e: hw6-spamham-data/dev/dev324
+Spam score: -1683.7283778
+ Ham score: -1862.67143837
+hw6-spamham-data/dev/dev324 is True
+
+e: hw6-spamham-data/dev/dev325
+Spam score: -1623.00216829
+ Ham score: -1624.82838309
+hw6-spamham-data/dev/dev325 is True
+
+e: hw6-spamham-data/dev/dev326
+Spam score: -6329.31869436
+ Ham score: -7450.0691498
+hw6-spamham-data/dev/dev326 is True
+
+e: hw6-spamham-data/dev/dev327
+Spam score: -2734.04762842
+ Ham score: -3395.94580894
+hw6-spamham-data/dev/dev327 is True
+
+e: hw6-spamham-data/dev/dev328
+Spam score: -3720.12545467
+ Ham score: -4352.64285162
+hw6-spamham-data/dev/dev328 is True
+
+e: hw6-spamham-data/dev/dev329
+Spam score: -2906.61440535
+ Ham score: -3008.33889132
+hw6-spamham-data/dev/dev329 is True
+
+e: hw6-spamham-data/dev/dev33
+Spam score: -3225.69465291
+ Ham score: -2967.57532938
+hw6-spamham-data/dev/dev33 is False
+
+e: hw6-spamham-data/dev/dev330
+Spam score: -3543.15110549
+ Ham score: -4480.053788
+hw6-spamham-data/dev/dev330 is True
+
+e: hw6-spamham-data/dev/dev331
+Spam score: -2135.84533583
+ Ham score: -2318.06802457
+hw6-spamham-data/dev/dev331 is True
+
+e: hw6-spamham-data/dev/dev332
+Spam score: -2121.95219026
+ Ham score: -2292.21495524
+hw6-spamham-data/dev/dev332 is True
+
+e: hw6-spamham-data/dev/dev333
+Spam score: -1848.52388766
+ Ham score: -2039.96654127
+hw6-spamham-data/dev/dev333 is True
+
+e: hw6-spamham-data/dev/dev334
+Spam score: -2384.28715542
+ Ham score: -2789.20998412
+hw6-spamham-data/dev/dev334 is True
+
+e: hw6-spamham-data/dev/dev335
+Spam score: -1996.26490737
+ Ham score: -2183.24585815
+hw6-spamham-data/dev/dev335 is True
+
+e: hw6-spamham-data/dev/dev336
+Spam score: -4216.28268568
+ Ham score: -5103.24031025
+hw6-spamham-data/dev/dev336 is True
+
+e: hw6-spamham-data/dev/dev337
+Spam score: -1890.99038707
+ Ham score: -1912.83658031
+hw6-spamham-data/dev/dev337 is True
+
+e: hw6-spamham-data/dev/dev338
+Spam score: -1845.62340163
+ Ham score: -2082.28450615
+hw6-spamham-data/dev/dev338 is True
+
+e: hw6-spamham-data/dev/dev339
+Spam score: -13159.0173782
+ Ham score: -14663.6492155
+hw6-spamham-data/dev/dev339 is True
+
+e: hw6-spamham-data/dev/dev34
+Spam score: -3374.7973372
+ Ham score: -3129.83781033
+hw6-spamham-data/dev/dev34 is False
+
+e: hw6-spamham-data/dev/dev340
+Spam score: -3751.56806972
+ Ham score: -4570.43871086
+hw6-spamham-data/dev/dev340 is True
+
+e: hw6-spamham-data/dev/dev341
+Spam score: -5744.94611818
+ Ham score: -7334.32125832
+hw6-spamham-data/dev/dev341 is True
+
+e: hw6-spamham-data/dev/dev342
+Spam score: -6656.43095751
+ Ham score: -8264.81177725
+hw6-spamham-data/dev/dev342 is True
+
+e: hw6-spamham-data/dev/dev343
+Spam score: -2221.13993194
+ Ham score: -2514.710413
+hw6-spamham-data/dev/dev343 is True
+
+e: hw6-spamham-data/dev/dev344
+Spam score: -5463.47214796
+ Ham score: -6759.58225559
+hw6-spamham-data/dev/dev344 is True
+
+e: hw6-spamham-data/dev/dev345
+Spam score: -1652.62217452
+ Ham score: -1864.94573856
+hw6-spamham-data/dev/dev345 is True
+
+e: hw6-spamham-data/dev/dev346
+Spam score: -22950.3198268
+ Ham score: -30508.8917791
+hw6-spamham-data/dev/dev346 is True
+
+e: hw6-spamham-data/dev/dev347
+Spam score: -3718.77564129
+ Ham score: -4571.91148114
+hw6-spamham-data/dev/dev347 is True
+
+e: hw6-spamham-data/dev/dev348
+Spam score: -1886.18317626
+ Ham score: -2394.79533656
+hw6-spamham-data/dev/dev348 is True
+
+e: hw6-spamham-data/dev/dev349
+Spam score: -4586.2644875
+ Ham score: -5502.24464482
+hw6-spamham-data/dev/dev349 is True
+
+e: hw6-spamham-data/dev/dev35
+Spam score: -3314.1907046
+ Ham score: -3070.61897881
+hw6-spamham-data/dev/dev35 is False
+
+e: hw6-spamham-data/dev/dev350
+Spam score: -2366.46794267
+ Ham score: -2639.59895612
+hw6-spamham-data/dev/dev350 is True
+
+e: hw6-spamham-data/dev/dev351
+Spam score: -5736.91922275
+ Ham score: -6101.43180731
+hw6-spamham-data/dev/dev351 is True
+
+e: hw6-spamham-data/dev/dev352
+Spam score: -2097.93820286
+ Ham score: -2008.4158124
+hw6-spamham-data/dev/dev352 is False
+
+e: hw6-spamham-data/dev/dev353
+Spam score: -6607.89241036
+ Ham score: -8342.72107441
+hw6-spamham-data/dev/dev353 is True
+
+e: hw6-spamham-data/dev/dev354
+Spam score: -1315.48238543
+ Ham score: -1370.74969732
+hw6-spamham-data/dev/dev354 is True
+
+e: hw6-spamham-data/dev/dev355
+Spam score: -22522.4808584
+ Ham score: -30031.2768888
+hw6-spamham-data/dev/dev355 is True
+
+e: hw6-spamham-data/dev/dev356
+Spam score: -3308.18112635
+ Ham score: -3743.17609538
+hw6-spamham-data/dev/dev356 is True
+
+e: hw6-spamham-data/dev/dev357
+Spam score: -3565.69096754
+ Ham score: -3694.49308881
+hw6-spamham-data/dev/dev357 is True
+
+e: hw6-spamham-data/dev/dev358
+Spam score: -3701.31719541
+ Ham score: -4125.13482004
+hw6-spamham-data/dev/dev358 is True
+
+e: hw6-spamham-data/dev/dev359
+Spam score: -29509.8236076
+ Ham score: -33500.6347333
+hw6-spamham-data/dev/dev359 is True
+
+e: hw6-spamham-data/dev/dev36
+Spam score: -2822.70568994
+ Ham score: -2657.7067556
+hw6-spamham-data/dev/dev36 is False
+
+e: hw6-spamham-data/dev/dev360
+Spam score: -11825.4897117
+ Ham score: -16218.8716027
+hw6-spamham-data/dev/dev360 is True
+
+e: hw6-spamham-data/dev/dev361
+Spam score: -1542.26848202
+ Ham score: -1643.43989454
+hw6-spamham-data/dev/dev361 is True
+
+e: hw6-spamham-data/dev/dev362
+Spam score: -5909.90224829
+ Ham score: -7014.11595296
+hw6-spamham-data/dev/dev362 is True
+
+e: hw6-spamham-data/dev/dev363
+Spam score: -2658.80334565
+ Ham score: -2853.56031668
+hw6-spamham-data/dev/dev363 is True
+
+e: hw6-spamham-data/dev/dev364
+Spam score: -6411.55730623
+ Ham score: -8178.7977186
+hw6-spamham-data/dev/dev364 is True
+
+e: hw6-spamham-data/dev/dev365
+Spam score: -7183.23584236
+ Ham score: -8659.36534454
+hw6-spamham-data/dev/dev365 is True
+
+e: hw6-spamham-data/dev/dev366
+Spam score: -4533.24908528
+ Ham score: -4789.76640649
+hw6-spamham-data/dev/dev366 is True
+
+e: hw6-spamham-data/dev/dev367
+Spam score: -7756.73124698
+ Ham score: -9995.00804233
+hw6-spamham-data/dev/dev367 is True
+
+e: hw6-spamham-data/dev/dev368
+Spam score: -3247.2711764
+ Ham score: -4054.46624963
+hw6-spamham-data/dev/dev368 is True
+
+e: hw6-spamham-data/dev/dev369
+Spam score: -2337.08595701
+ Ham score: -2573.64529574
+hw6-spamham-data/dev/dev369 is True
+
+e: hw6-spamham-data/dev/dev37
+Spam score: -3153.86355344
+ Ham score: -2919.40086427
+hw6-spamham-data/dev/dev37 is False
+
+e: hw6-spamham-data/dev/dev370
+Spam score: -6218.688054
+ Ham score: -6436.77693321
+hw6-spamham-data/dev/dev370 is True
+
+e: hw6-spamham-data/dev/dev371
+Spam score: -5292.40617125
+ Ham score: -6279.00894274
+hw6-spamham-data/dev/dev371 is True
+
+e: hw6-spamham-data/dev/dev372
+Spam score: -8186.89931658
+ Ham score: -10499.9266841
+hw6-spamham-data/dev/dev372 is True
+
+e: hw6-spamham-data/dev/dev373
+Spam score: -3446.85804584
+ Ham score: -3720.31529433
+hw6-spamham-data/dev/dev373 is True
+
+e: hw6-spamham-data/dev/dev374
+Spam score: -1914.21387284
+ Ham score: -2100.09508043
+hw6-spamham-data/dev/dev374 is True
+
+e: hw6-spamham-data/dev/dev375
+Spam score: -5596.5592632
+ Ham score: -7144.95223394
+hw6-spamham-data/dev/dev375 is True
+
+e: hw6-spamham-data/dev/dev376
+Spam score: -3306.60935621
+ Ham score: -3465.39008908
+hw6-spamham-data/dev/dev376 is True
+
+e: hw6-spamham-data/dev/dev377
+Spam score: -3455.07365902
+ Ham score: -3607.63199607
+hw6-spamham-data/dev/dev377 is True
+
+e: hw6-spamham-data/dev/dev378
+Spam score: -1956.87749929
+ Ham score: -2165.63530167
+hw6-spamham-data/dev/dev378 is True
+
+e: hw6-spamham-data/dev/dev379
+Spam score: -1154.92039337
+ Ham score: -1195.85214639
+hw6-spamham-data/dev/dev379 is True
+
+e: hw6-spamham-data/dev/dev38
+Spam score: -1808.79505119
+ Ham score: -1664.79998886
+hw6-spamham-data/dev/dev38 is False
+
+e: hw6-spamham-data/dev/dev380
+Spam score: -2127.86091539
+ Ham score: -2601.75980151
+hw6-spamham-data/dev/dev380 is True
+
+e: hw6-spamham-data/dev/dev381
+Spam score: -1878.78890139
+ Ham score: -2000.79654338
+hw6-spamham-data/dev/dev381 is True
+
+e: hw6-spamham-data/dev/dev382
+Spam score: -2238.87094551
+ Ham score: -2408.02018647
+hw6-spamham-data/dev/dev382 is True
+
+e: hw6-spamham-data/dev/dev383
+Spam score: -2226.3900897
+ Ham score: -2389.95335296
+hw6-spamham-data/dev/dev383 is True
+
+e: hw6-spamham-data/dev/dev384
+Spam score: -4057.18728231
+ Ham score: -4637.50911552
+hw6-spamham-data/dev/dev384 is True
+
+e: hw6-spamham-data/dev/dev385
+Spam score: -1866.61238782
+ Ham score: -2011.16678718
+hw6-spamham-data/dev/dev385 is True
+
+e: hw6-spamham-data/dev/dev386
+Spam score: -7510.09600819
+ Ham score: -9455.27411022
+hw6-spamham-data/dev/dev386 is True
+
+e: hw6-spamham-data/dev/dev387
+Spam score: -2719.1690663
+ Ham score: -3361.16176957
+hw6-spamham-data/dev/dev387 is True
+
+e: hw6-spamham-data/dev/dev388
+Spam score: -16829.2652677
+ Ham score: -22405.5598321
+hw6-spamham-data/dev/dev388 is True
+
+e: hw6-spamham-data/dev/dev389
+Spam score: -3572.62503766
+ Ham score: -3653.15123429
+hw6-spamham-data/dev/dev389 is True
+
+e: hw6-spamham-data/dev/dev39
+Spam score: -2181.00431965
+ Ham score: -2005.48904657
+hw6-spamham-data/dev/dev39 is False
+
+e: hw6-spamham-data/dev/dev390
+Spam score: -12678.2935369
+ Ham score: -14294.7363658
+hw6-spamham-data/dev/dev390 is True
+
+e: hw6-spamham-data/dev/dev391
+Spam score: -1581.54615312
+ Ham score: -1847.51522163
+hw6-spamham-data/dev/dev391 is True
+
+e: hw6-spamham-data/dev/dev392
+Spam score: -8546.00208153
+ Ham score: -10074.8042882
+hw6-spamham-data/dev/dev392 is True
+
+e: hw6-spamham-data/dev/dev393
+Spam score: -7853.04810297
+ Ham score: -9440.40037097
+hw6-spamham-data/dev/dev393 is True
+
+e: hw6-spamham-data/dev/dev394
+Spam score: -12660.6601533
+ Ham score: -14276.9121681
+hw6-spamham-data/dev/dev394 is True
+
+e: hw6-spamham-data/dev/dev395
+Spam score: -2390.67494374
+ Ham score: -2668.39513252
+hw6-spamham-data/dev/dev395 is True
+
+e: hw6-spamham-data/dev/dev396
+Spam score: -3591.48925359
+ Ham score: -4540.85969311
+hw6-spamham-data/dev/dev396 is True
+
+e: hw6-spamham-data/dev/dev397
+Spam score: -1162.72295593
+ Ham score: -1217.48973164
+hw6-spamham-data/dev/dev397 is True
+
+e: hw6-spamham-data/dev/dev398
+Spam score: -6511.36717521
+ Ham score: -8355.72780728
+hw6-spamham-data/dev/dev398 is True
+
+e: hw6-spamham-data/dev/dev399
+Spam score: -9249.39098346
+ Ham score: -12524.8447927
+hw6-spamham-data/dev/dev399 is True
+
+e: hw6-spamham-data/dev/dev4
+Spam score: -3101.33414101
+ Ham score: -2820.42026031
+hw6-spamham-data/dev/dev4 is False
+
+e: hw6-spamham-data/dev/dev40
+Spam score: -6928.5548933
+ Ham score: -6757.43102584
+hw6-spamham-data/dev/dev40 is False
+
+e: hw6-spamham-data/dev/dev400
+Spam score: -2153.7600982
+ Ham score: -2130.3338076
+hw6-spamham-data/dev/dev400 is False
+
+e: hw6-spamham-data/dev/dev41
+Spam score: -11656.050438
+ Ham score: -12317.7761306
+hw6-spamham-data/dev/dev41 is True
+
+e: hw6-spamham-data/dev/dev42
+Spam score: -3880.32958664
+ Ham score: -3664.50379637
+hw6-spamham-data/dev/dev42 is False
+
+e: hw6-spamham-data/dev/dev43
+Spam score: -3485.93690192
+ Ham score: -3203.90357564
+hw6-spamham-data/dev/dev43 is False
+
+e: hw6-spamham-data/dev/dev44
+Spam score: -2472.26685086
+ Ham score: -2244.49645492
+hw6-spamham-data/dev/dev44 is False
+
+e: hw6-spamham-data/dev/dev45
+Spam score: -2797.69362181
+ Ham score: -2554.13638387
+hw6-spamham-data/dev/dev45 is False
+
+e: hw6-spamham-data/dev/dev46
+Spam score: -2669.98459876
+ Ham score: -2539.39308465
+hw6-spamham-data/dev/dev46 is False
+
+e: hw6-spamham-data/dev/dev47
+Spam score: -4807.51759688
+ Ham score: -4559.02726846
+hw6-spamham-data/dev/dev47 is False
+
+e: hw6-spamham-data/dev/dev48
+Spam score: -4115.04330966
+ Ham score: -4042.42568517
+hw6-spamham-data/dev/dev48 is False
+
+e: hw6-spamham-data/dev/dev49
+Spam score: -3367.22344084
+ Ham score: -3191.35030947
+hw6-spamham-data/dev/dev49 is False
+
+e: hw6-spamham-data/dev/dev5
+Spam score: -2718.19273734
+ Ham score: -2607.31250123
+hw6-spamham-data/dev/dev5 is False
+
+e: hw6-spamham-data/dev/dev50
+Spam score: -2841.12146687
+ Ham score: -2690.63068895
+hw6-spamham-data/dev/dev50 is False
+
+e: hw6-spamham-data/dev/dev51
+Spam score: -2623.76525546
+ Ham score: -2503.57775701
+hw6-spamham-data/dev/dev51 is False
+
+e: hw6-spamham-data/dev/dev52
+Spam score: -3516.79655826
+ Ham score: -3332.20524011
+hw6-spamham-data/dev/dev52 is False
+
+e: hw6-spamham-data/dev/dev53
+Spam score: -9386.6456574
+ Ham score: -9268.39395366
+hw6-spamham-data/dev/dev53 is False
+
+e: hw6-spamham-data/dev/dev54
+Spam score: -3513.50184104
+ Ham score: -3253.31576318
+hw6-spamham-data/dev/dev54 is False
+
+e: hw6-spamham-data/dev/dev55
+Spam score: -4759.4285563
+ Ham score: -4517.32742147
+hw6-spamham-data/dev/dev55 is False
+
+e: hw6-spamham-data/dev/dev56
+Spam score: -3065.75113696
+ Ham score: -2851.98953482
+hw6-spamham-data/dev/dev56 is False
+
+e: hw6-spamham-data/dev/dev57
+Spam score: -3950.50943037
+ Ham score: -3841.95365376
+hw6-spamham-data/dev/dev57 is False
+
+e: hw6-spamham-data/dev/dev58
+Spam score: -2121.96000669
+ Ham score: -2010.83147527
+hw6-spamham-data/dev/dev58 is False
+
+e: hw6-spamham-data/dev/dev59
+Spam score: -2830.15796067
+ Ham score: -2608.5699235
+hw6-spamham-data/dev/dev59 is False
+
+e: hw6-spamham-data/dev/dev6
+Spam score: -4687.48542168
+ Ham score: -4505.353613
+hw6-spamham-data/dev/dev6 is False
+
+e: hw6-spamham-data/dev/dev60
+Spam score: -21085.502584
+ Ham score: -21395.8060032
+hw6-spamham-data/dev/dev60 is True
+
+e: hw6-spamham-data/dev/dev61
+Spam score: -3371.42374516
+ Ham score: -3164.08924735
+hw6-spamham-data/dev/dev61 is False
+
+e: hw6-spamham-data/dev/dev62
+Spam score: -2221.39788338
+ Ham score: -2113.46171795
+hw6-spamham-data/dev/dev62 is False
+
+e: hw6-spamham-data/dev/dev63
+Spam score: -3395.76479984
+ Ham score: -3244.26966293
+hw6-spamham-data/dev/dev63 is False
+
+e: hw6-spamham-data/dev/dev64
+Spam score: -2696.11914611
+ Ham score: -2520.35912702
+hw6-spamham-data/dev/dev64 is False
+
+e: hw6-spamham-data/dev/dev65
+Spam score: -2264.08905491
+ Ham score: -2141.55127937
+hw6-spamham-data/dev/dev65 is False
+
+e: hw6-spamham-data/dev/dev66
+Spam score: -4731.25982474
+ Ham score: -4562.33835097
+hw6-spamham-data/dev/dev66 is False
+
+e: hw6-spamham-data/dev/dev67
+Spam score: -3921.76607531
+ Ham score: -3738.36409473
+hw6-spamham-data/dev/dev67 is False
+
+e: hw6-spamham-data/dev/dev68
+Spam score: -4641.00830137
+ Ham score: -4455.00370117
+hw6-spamham-data/dev/dev68 is False
+
+e: hw6-spamham-data/dev/dev69
+Spam score: -2632.1322976
+ Ham score: -2515.28688513
+hw6-spamham-data/dev/dev69 is False
+
+e: hw6-spamham-data/dev/dev7
+Spam score: -9554.5732942
+ Ham score: -9387.30534795
+hw6-spamham-data/dev/dev7 is False
+
+e: hw6-spamham-data/dev/dev70
+Spam score: -3326.93752269
+ Ham score: -3206.94512853
+hw6-spamham-data/dev/dev70 is False
+
+e: hw6-spamham-data/dev/dev71
+Spam score: -2936.27257644
+ Ham score: -2755.19865566
+hw6-spamham-data/dev/dev71 is False
+
+e: hw6-spamham-data/dev/dev72
+Spam score: -3008.82248722
+ Ham score: -2755.01724876
+hw6-spamham-data/dev/dev72 is False
+
+e: hw6-spamham-data/dev/dev73
+Spam score: -2497.91291884
+ Ham score: -2379.26901901
+hw6-spamham-data/dev/dev73 is False
+
+e: hw6-spamham-data/dev/dev74
+Spam score: -3675.05991582
+ Ham score: -3421.9026017
+hw6-spamham-data/dev/dev74 is False
+
+e: hw6-spamham-data/dev/dev75
+Spam score: -2455.64760186
+ Ham score: -2403.61327228
+hw6-spamham-data/dev/dev75 is False
+
+e: hw6-spamham-data/dev/dev76
+Spam score: -3068.81716413
+ Ham score: -2933.03039717
+hw6-spamham-data/dev/dev76 is False
+
+e: hw6-spamham-data/dev/dev77
+Spam score: -4567.82711753
+ Ham score: -4371.24720733
+hw6-spamham-data/dev/dev77 is False
+
+e: hw6-spamham-data/dev/dev78
+Spam score: -2157.12903142
+ Ham score: -2026.47878939
+hw6-spamham-data/dev/dev78 is False
+
+e: hw6-spamham-data/dev/dev79
+Spam score: -2744.33769247
+ Ham score: -2539.96150046
+hw6-spamham-data/dev/dev79 is False
+
+e: hw6-spamham-data/dev/dev8
+Spam score: -2451.98466461
+ Ham score: -2318.87632654
+hw6-spamham-data/dev/dev8 is False
+
+e: hw6-spamham-data/dev/dev80
+Spam score: -5234.65718858
+ Ham score: -5047.03073438
+hw6-spamham-data/dev/dev80 is False
+
+e: hw6-spamham-data/dev/dev81
+Spam score: -3774.4955431
+ Ham score: -3634.01348211
+hw6-spamham-data/dev/dev81 is False
+
+e: hw6-spamham-data/dev/dev82
+Spam score: -2595.3561743
+ Ham score: -2387.45367863
+hw6-spamham-data/dev/dev82 is False
+
+e: hw6-spamham-data/dev/dev83
+Spam score: -5905.14405385
+ Ham score: -5917.07701035
+hw6-spamham-data/dev/dev83 is True
+
+e: hw6-spamham-data/dev/dev84
+Spam score: -2891.31553436
+ Ham score: -2763.02650078
+hw6-spamham-data/dev/dev84 is False
+
+e: hw6-spamham-data/dev/dev85
+Spam score: -9118.25375319
+ Ham score: -9065.97008842
+hw6-spamham-data/dev/dev85 is False
+
+e: hw6-spamham-data/dev/dev86
+Spam score: -2276.18109451
+ Ham score: -2157.80155311
+hw6-spamham-data/dev/dev86 is False
+
+e: hw6-spamham-data/dev/dev87
+Spam score: -6708.9196598
+ Ham score: -6402.72620394
+hw6-spamham-data/dev/dev87 is False
+
+e: hw6-spamham-data/dev/dev88
+Spam score: -2684.66781107
+ Ham score: -2503.15514208
+hw6-spamham-data/dev/dev88 is False
+
+e: hw6-spamham-data/dev/dev89
+Spam score: -6495.59891585
+ Ham score: -6376.02196222
+hw6-spamham-data/dev/dev89 is False
+
+e: hw6-spamham-data/dev/dev9
+Spam score: -3567.57140959
+ Ham score: -3382.06309786
+hw6-spamham-data/dev/dev9 is False
+
+e: hw6-spamham-data/dev/dev90
+Spam score: -2956.22552744
+ Ham score: -2799.74032888
+hw6-spamham-data/dev/dev90 is False
+
+e: hw6-spamham-data/dev/dev91
+Spam score: -2794.63201703
+ Ham score: -2689.23511669
+hw6-spamham-data/dev/dev91 is False
+
+e: hw6-spamham-data/dev/dev92
+Spam score: -3580.23352944
+ Ham score: -3414.94388938
+hw6-spamham-data/dev/dev92 is False
+
+e: hw6-spamham-data/dev/dev93
+Spam score: -2717.05392052
+ Ham score: -2531.89502232
+hw6-spamham-data/dev/dev93 is False
+
+e: hw6-spamham-data/dev/dev94
+Spam score: -2986.70078649
+ Ham score: -2838.4520402
+hw6-spamham-data/dev/dev94 is False
+
+e: hw6-spamham-data/dev/dev95
+Spam score: -2918.4255052
+ Ham score: -2788.19508621
+hw6-spamham-data/dev/dev95 is False
+
+e: hw6-spamham-data/dev/dev96
+Spam score: -2675.05887371
+ Ham score: -2544.18464926
+hw6-spamham-data/dev/dev96 is False
+
+e: hw6-spamham-data/dev/dev97
+Spam score: -4153.01587694
+ Ham score: -4038.17514262
+hw6-spamham-data/dev/dev97 is False
+
+e: hw6-spamham-data/dev/dev98
+Spam score: -5010.02465722
+ Ham score: -4869.89868753
+hw6-spamham-data/dev/dev98 is False
+
+e: hw6-spamham-data/dev/dev99
+Spam score: -10480.8581918
+ Ham score: -9630.43667723
+hw6-spamham-data/dev/dev99 is False
+('spam:', '204')
+('ham:', '196')
