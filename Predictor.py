@@ -68,8 +68,8 @@ class Predictor:
                     numchar = numchar + 1
                     if x.isupper():
                         numupper = numupper + 1
-                if not word.isupper():
-                    word = word.lower()
+#                if not word.isupper():
+                word = word.lower()
                 numwords = numwords + 1
                 d[word] += 1
         return (numwords, d, numupper, numchar)
@@ -90,22 +90,15 @@ class Predictor:
         #***
         spam_upper = float(float(self.spam[2])/float(self.spam[3]))
         ham_upper = float(float(self.ham[2])/float(self.ham[3]))
-        numupper = 0
-        numchars = 0
         for x in open(filename).read().split():
             for y in x:
-                numchars = numchars + 1
                 if y.isupper():
-                    numupper = numupper + 1
-            if not x.isupper():
-                x = x.lower()
+                    s_score = s_score + math.log(spam_upper)
+                    h_score = h_score + math.log(ham_upper)
+#            if not x.isupper():
+            x = x.lower()
             s_score = s_score + math.log(spam.get(x,1))
             h_score = h_score + math.log(ham.get(x,1))
-        charfreq = float(float(numupper)/float(numchars))
-        if abs(charfreq - spam_upper) < abs(charfreq - ham_upper):
-            s_score = s_score + math.log(charfreq)
-        else:
-            h_score = h_score + math.log(charfreq)
         if s_score > h_score:
             return True
         else:
