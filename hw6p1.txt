@@ -24,5 +24,11 @@ Experiments:
    to the fact that this second feature has greater significance than the 
    case of a few words in the email.
 
+3. Adjusted score based on case
+   We calculated the percentage of words that were all upper case in the spam
+   and ham folders and then applied this to the scores given during prediction.
+   If a capital word was found, we'd add the probability to the score. This did
+   not end up changing the accuracy in any way.
+
 3. Removed email headers
    TODO(tgarsys): Write about

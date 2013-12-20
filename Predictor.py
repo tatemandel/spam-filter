@@ -62,17 +62,19 @@ class Predictor:
         d = defaultdict(int)
         numupper = 0
         numchar = 0
+        caps = 0
         for file in files:
             for word in open(file).read().split():
                 for x in word:
                     numchar = numchar + 1
                     if x.isupper():
                         numupper = numupper + 1
-#                if not word.isupper():
+                if word.isupper():
+                    caps = caps + 1
                 word = word.lower()
                 numwords = numwords + 1
                 d[word] += 1
-        return (numwords, d, numupper, numchar)
+        return (numwords, d, numupper, numchar, caps)
 
     def predict(self, filename):
         '''Take in a filename, return whether this file is spam
@@ -88,6 +90,8 @@ class Predictor:
         # 1. Reading in each word, and converting it to lower case (see code below)
         # 2. Adding  the log probability of that word for that class
         #***
+        spam_caps = float(float(self.spam[4])/float(self.spam[0]))
+        ham_caps = float(float(self.ham[4])/float(self.ham[0]))
         spam_upper = float(float(self.spam[2])/float(self.spam[3]))
         ham_upper = float(float(self.ham[2])/float(self.ham[3]))
         for x in open(filename).read().split():
@@ -95,10 +99,13 @@ class Predictor:
                 if y.isupper():
                     s_score = s_score + math.log(spam_upper)
                     h_score = h_score + math.log(ham_upper)
-#            if not x.isupper():
+            if x.isupper():
+                s_score = s_score + math.log(spam_caps)
+                h_score = h_score + math.log(ham_caps)
             x = x.lower()
             s_score = s_score + math.log(spam.get(x,1))
             h_score = h_score + math.log(ham.get(x,1))
+        
         if s_score > h_score:
             return True
         else:
